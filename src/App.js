@@ -72,12 +72,17 @@ class App extends Component {
       compra: {},
     });
   };
-  eliminarCompra = () => {
-    this.setState({
-      ...this.state,
-      compra: {}
-    });
-    this.handleOpen("success","Disfruta la pelicula!");
+  eliminarCompra = (cantidad) => {
+    if(cantidad>0){
+
+      this.setState({
+        ...this.state,
+        compra: {}
+      });
+      this.handleOpen("success","Disfruta la pelicula!");
+    } else{
+      this.handleOpen("error","Agrega una cantidad de boletos valida!");
+    }
   };
 
   aumentar = (valor) => {

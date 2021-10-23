@@ -105,11 +105,7 @@ class Movies extends Component {
                 size="small"
                 color="success"
                 onClick={() => {
-                  if (ticket.cantidad > 0) {
-                    this.props.eliminar();
-                  } else {
-                    this.handleOpen("error","Ingresa la cantidad de boletos!");
-                  }
+                    this.props.eliminar(ticket.cantidad);
                 }}
               >
                 Comprar
