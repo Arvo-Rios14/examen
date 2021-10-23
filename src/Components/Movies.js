@@ -4,8 +4,6 @@ import { Button } from "@mui/material";
 class Movies extends Component {
   render() {
     var movies = this.props.movies;
-    console.log(movies);
-
     return (
       <div id="divMovies">
         {movies.map((movie) => (
@@ -17,7 +15,7 @@ class Movies extends Component {
               backgroundColor: "gray",
             }}
           >
-            <img key="movie.codigo" src={movie.url} />
+            <img  src={movie.url} alt="Cinepolis logo"/>
 
             <div
               style={{
@@ -35,34 +33,14 @@ class Movies extends Component {
               <div style={{ display: "flex", flexDirection: "row" }}>
                 {movie.horarios.map((horario) => (
                   <Button
-                    sx={{ marginLeft: "5px", marginBottom: "5px",marginRight:"5px" }}
+                    sx={{ marginLeft: "5px", marginBottom: "5px",marginRight:"5px", backgroundColor:"#262522" }}
                     variant="contained"
                     size="small"
-                    color="error"
                     onClick={() => {this.props.agregar(movie,horario)}}
                   >
                     {horario}
                   </Button>
                 ))}
-
-                {/* <Button
-                  sx={{ marginLeft: "5px",marginBottom:"5px" }}
-                  variant="contained"
-                  size="small"
-                  color="error"
-                  onClick={() => {}}
-                >
-                  Boton
-                </Button>
-                <Button
-                  sx={{ marginLeft: "5px",marginBottom:"5px",marginRight:"5px" }}
-                  variant="contained"
-                  size="small"
-                  color="error"
-                  onClick={() => {}}
-                >
-                  Boton
-                </Button> */}
               </div>
             </div>
           </div>

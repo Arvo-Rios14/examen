@@ -3,10 +3,13 @@ import Header from "./Components/Header";
 import React, { Component } from "react";
 import Movies from "./Components/Movies";
 import Ticket from "./Components/Ticket";
+import { Alert } from "@mui/material";
+import { Snackbar } from "@mui/material";
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      orders: [], open: false,
       compra: {},
       cartelera: [
         {
@@ -51,42 +54,82 @@ class App extends Component {
         },
       ],
     };
-
-
-
-    // calcular = () => {
-    //   //  FUNCION
-    // };
-
-    // eliminarCompra = () => {
-    //   //  FUNCION
-    // };
-
-    // comprar = () => {
-    //   //  FUNCION
-    // };
   }
+
+  handleOpen = (color,mensaje) => {
+    this.colorAlerta = color;
+    this.mensaje = mensaje;
+    this.setState({ open: true });
+  };
+
+  handleClose = () => this.setState({ open: false });
+
+  handleClick = () => this.setState({ orders: [1], open: true });
+  cancelar = () => {
+    document.getElementById('ticketAmount').value="0";
+    this.setState({
+      ...this.state,
+      compra: {},
+    });
+  };
+  eliminarCompra = () => {
+    this.setState({
+      ...this.state,
+      compra: {}
+    });
+    this.handleOpen("success","Disfruta la pelicula!");
+  };
+
+  aumentar = (valor) => {
+    console.log(valor);
+    let objeto=this.state.compra;
+    objeto.cantidad=valor;
+    objeto.total=objeto.precio*objeto.cantidad;
+    this.setState({
+      ...this.state,
+      compra: objeto
+    });
+  };
+  
   agregar = (movie,horario) => {
     let objeto={}; objeto=movie;
     objeto.horario=horario;
     objeto.cantidad=0;
     objeto.total=0;
-    console.log(objeto);
-    objeto=movie;
     this.setState({
       ...this.state,
-      compra: movie,
+      compra: objeto,
     });
   };
-  render() {
 
+
+  render() {
+    const { open } = this.state;
     return (
       <div className="App">
         <Header></Header>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex",flexDirection:"row",justifyContent:"space-evenly" }}>
           <Movies movies={this.state.cartelera} agregar={this.agregar} />
-          <Ticket ticket={this.state.compra}/>
+          <Ticket ticket={this.state.compra} cancelar={this.cancelar} aumentar={this.aumentar} eliminar={this.eliminarCompra}/>
         </div>
+        <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+            open={open}
+            onClose={this.handleClose}
+            autoHideDuration={2000}
+          >
+            <Alert
+              onClose={this.handleClose}
+              severity={this.colorAlerta}
+              elevation={4}
+              variant="filled"
+            >
+              {this.mensaje}
+            </Alert>
+          </Snackbar>
       </div>
     );
   }
